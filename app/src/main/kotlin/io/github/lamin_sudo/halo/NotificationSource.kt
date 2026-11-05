@@ -238,7 +238,7 @@ class NotificationSource(
             val rows = rowsBySlot.getOrPut(key) { ArrayDeque(MAX_ROWS) }
             if (count == 1) rows.clear()
             val senderRaw = senderName(firstSender(extras))
-            // `android.title` of a chat is the platform's own composition ("Lamini: Lamini"), so
+            // `android.title` of a chat is the platform's own composition ("Alex: Alex"), so
             // the conversation name is the next best thing to a sender name — never the title.
             val sender = senderRaw
                 ?: runCatching { extras?.getCharSequence("android.conversationTitle")?.toString() }

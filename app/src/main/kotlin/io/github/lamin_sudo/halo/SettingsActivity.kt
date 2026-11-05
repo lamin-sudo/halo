@@ -433,7 +433,7 @@ class SettingsActivity : Activity() {
         )
         val notification = Notification.Builder(this, CALL_CHANNEL)
             .setSmallIcon(android.R.drawable.sym_action_call)
-            .setContentTitle("Rabah Bouchentouf")
+            .setContentTitle("Alex Sample")
             .setContentText("01:12")
             .setCategory(Notification.CATEGORY_CALL)
             .setOngoing(true)
@@ -525,7 +525,7 @@ class SettingsActivity : Activity() {
         )
         val notification = Notification.Builder(this, CALL_CHANNEL)
             .setSmallIcon(android.R.drawable.sym_call_incoming)
-            .setContentTitle("Rabah Bouchentouf")
+            .setContentTitle("Alex Sample")
             .setContentText("mobile · incoming")
             .setCategory(Notification.CATEGORY_CALL)
             .setOngoing(true)
@@ -631,10 +631,10 @@ class SettingsActivity : Activity() {
 
         /** Name, disc colour, message — four senders is more than the card ever shows. */
         private val SENDERS = arrayOf(
-            Triple("Lamini", 0xFF1FA97C.toInt(), "rashu nchouf el market ba3ed l3echia"),
-            Triple("Bilal", 0xFF5B8DEF.toInt(), "lekk tbla el chargeur 25W?"),
-            Triple("Wissal", 0xFFE0733A.toInt(), "siftli la facture iya mak"),
-            Triple("Nabil", 0xFF9B59D0.toInt(), "el client dyel 14:30 wesdeh"),
+            Triple("Alex", 0xFF1FA97C.toInt(), "check the marketplace price later"),
+            Triple("Sam", 0xFF5B8DEF.toInt(), "is the 25W charger in stock?"),
+            Triple("Jordan", 0xFFE0733A.toInt(), "send me the invoice when ready"),
+            Triple("Riley", 0xFF9B59D0.toInt(), "the 14:30 customer has arrived"),
         )
 
         /** Static: `am start` may hand the intent to a fresh instance every time. */

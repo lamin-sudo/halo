@@ -36,6 +36,11 @@ PY
 fire() {  # fire <test variant> <seconds to wait>
   "$ADB" -s "$SERIAL" shell "am start -n $PKG/.SettingsActivity --es test $1" >/dev/null 2>&1
   sleep "${2:-3}"
+  # Then put a clean backdrop under the island. Without this the shot keeps whatever was on
+  # screen — the launcher, with someone's real app icons and folders visible around the card.
+  # The app's own settings page is dark, branded, and says nothing about whoever took the shot.
+  "$ADB" -s "$SERIAL" shell "am start -n $PKG/.SettingsActivity" >/dev/null 2>&1
+  sleep 1
 }
 
 echo "== waking the screen and clearing any old rows"
@@ -43,6 +48,26 @@ echo "== waking the screen and clearing any old rows"
 "$ADB" -s "$SERIAL" shell wm dismiss-keyguard >/dev/null 2>&1
 "$ADB" -s "$SERIAL" shell "am start -n $PKG/.SettingsActivity --es test stop" >/dev/null 2>&1
 sleep 2
+
+# Prove the module is actually running before producing eight pictures of an empty wallpaper.
+# Observed on this device: after `adb install -r` of a rebuilt release plus a SystemUI restart,
+# the module was registered, enabled and scoped in LSPosed's own database, yet SystemUI logged
+# nothing at all and no island appeared. A reboot is the usual cure; this check at least stops
+# the script from shipping blank images while that is happening.
+"$ADB" -s "$SERIAL" logcat -c >/dev/null 2>&1
+"$ADB" -s "$SERIAL" shell "am start -n $PKG/.SettingsActivity --es test 1" >/dev/null 2>&1
+sleep 3
+if ! "$ADB" -s "$SERIAL" logcat -d -s HaloIsland 2>/dev/null | grep -q "show NOTIFICATION"; then
+  cat <<MISSING
+The module did not answer, so nothing was captured. Check in this order:
+  1. LSPosed -> Modules -> Halo: enabled, and SystemUI ticked in its scope.
+  2. Reboot (an updated APK is not always picked up by the running SystemUI):
+       adb reboot && sleep 60 && sh tools/capture-gallery.sh
+  3. If it still says nothing: adb shell su -c 'settings get global a79_island_disabled'
+MISSING
+  exit 1
+fi
+echo "  module answered, capturing"
 
 echo "== capsule (one message)"
 fire 1 3;                 shot capsule
