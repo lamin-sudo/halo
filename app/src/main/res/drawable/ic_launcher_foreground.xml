@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Adaptive icon foreground for Halo. Drawn on the 108x108 adaptive canvas with the 72x72 safe
+  zone respected: everything important sits inside x/y 30..78, so the launcher mask (circle,
+  squircle, teardrop) can never cut the pill. Concept A from the identity pass — the capsule with
+  the light ring sweeping around it, which is literally what the module renders on the phone.
+-->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!--
+      the halo arc, open on the lower left so it reads as motion rather than a static circle.
+      First pass used #1F4A7A and it vanished at launcher size (measured on the A79 panel: the
+      icon read as "capsule on black"), so it is now a real blue and one step thicker.
+    -->
+    <path
+        android:strokeColor="#3A7BC2"
+        android:strokeWidth="4.2"
+        android:strokeLineCap="round"
+        android:pathData="M30.6,38.4 A26,26 0 0 1 77.4,42.6" />
+
+    <!-- the island itself -->
+    <path
+        android:strokeColor="#0A84FF"
+        android:strokeWidth="3.6"
+        android:pathData="M42,44 L66,44 A10,10 0 0 1 66,64 L42,64 A10,10 0 0 1 42,44 Z" />
+
+    <!-- the camera hole it is drawn around -->
+    <path
+        android:fillColor="#0A84FF"
+        android:pathData="M54,48.4 A5.6,5.6 0 0 1 54,59.6 A5.6,5.6 0 0 1 54,48.4 Z" />
+
+    <!-- the progress line, the one detail that says "this is a live capsule" -->
+    <path
+        android:fillColor="#34C759"
+        android:pathData="M44,60.6 L57,60.6 A1.4,1.4 0 0 1 57,63.4 L44,63.4 A1.4,1.4 0 0 1 44,60.6 Z" />
+</vector>

@@ -1,0 +1,30 @@
+# NOTICE
+
+This module is original work, but two external sources shaped it.
+
+## HyperIsland (MIT)
+
+Hook scaffolding, the libxposed module layout (`META-INF/xposed/{java_init.list,module.prop,scope.list}`),
+the remote-preferences configuration channel, and the "companion app writes prefs, SystemUI reads
+them" pattern were informed by reading HyperIsland by 芥子 (1812z), licensed MIT:
+
+    https://github.com/1812z/HyperIsland
+
+Copyright (c) the HyperIsland authors. MIT licence text: https://opensource.org/licenses/MIT
+
+No HyperIsland source file is included, and none of its HyperOS-specific hook targets are used —
+this module does not touch `miui.systemui.dynamicisland.*`, which does not exist on ColorOS.
+
+## realme C67 / ColorOS SystemUI (proprietary — measurements only)
+
+Island proportions and behaviour were derived by reading the shipped `SystemUI.apk` of a
+realme C67 (RMX3890, `RMX3890export_15.C.52`), which is proprietary OPPO/realme software.
+
+What was taken is arithmetic and physical facts, all of which are independently measurable:
+
+- cutout geometry on a 1080x2400 panel: 76x100 px centred at x=540
+- capsule height 36dp at density 540 = 121.5 px; base width 208dp = 702 px
+- status-bar row depth equals the cutout depth
+
+No class, method, resource, layout, drawable, or animation asset from that APK is present in this
+repository, and none may be added. The expand/collapse choreography is designed here.

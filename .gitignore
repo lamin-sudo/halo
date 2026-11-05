@@ -1,0 +1,19 @@
+# build
+*.iml
+.gradle/
+.kotlin/
+build/
+local.properties
+.idea/
+.DS_Store
+
+# the signing key never lives here (it is read from ../island-keys/)
+*.apk
+*.keystore
+*.jks
+keystore.properties
+
+# private working logs: the day-by-day reverse-engineering diary and the internal feature
+# ledger. README.md and docs/ are the published versions of the same knowledge.
+HANDOFF.md
+FEATURES.md

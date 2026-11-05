@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Declared so the settings screen can hold WRITE_SECURE_SETTINGS once it is granted from a
+         PC (`pm grant` only works for a permission the app asks for). It is the app-op route to
+         Settings.Global, which is the only store the hooked SystemUI can read — see ConfigStore.
+         It is an app-op permission: no dialog, granted once with pm grant. -->
+    <uses-permission android:name="android.permission.WRITE_SECURE_SETTINGS" />
+
+    <!-- The settings screen's self test posts a real notification. On API 33 a targetSdk-33 app
+         is silently dropped without this, which is why the `am start` test never reached the hook. -->
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <application
+        android:allowBackup="false"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:theme="@android:style/Theme.DeviceDefault.Settings">
+
+        <activity
+            android:name=".SettingsActivity"
+            android:exported="true"
+            android:label="@string/app_name">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <!-- Shows up in the LSPosed module list as a launchable settings entry. -->
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="de.robv.android.xposed.category.MODULE_SETTINGS" />
+            </intent-filter>
+        </activity>
+    <!-- The automation door (Tasker / Termux / adb). Exported on purpose: the point is that
+         another process can reach it, and the worst it can do is put a pill on the screen.
+         See CustomReceiver for the intent contract. -->
+    <receiver
+        android:name=".CustomReceiver"
+        android:exported="true">
+        <intent-filter>
+            <action android:name="dz.island.a79.CUSTOM" />
+        </intent-filter>
+    </receiver>
+
+    </application>
+</manifest>

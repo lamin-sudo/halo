@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+      Renamed from "A79 Island" on the identity pass: the launcher clipped the old label, and the
+      name described the test device rather than the thing. The package stays dz.island.a79 —
+      renaming it would mean uninstalling, which clears the WRITE_SECURE_SETTINGS grant and can
+      stale the LSPosed scope.
+    -->
+    <string name="app_name">Halo</string>
+    <string name="app_subtitle">Live island for your camera hole</string>
+</resources>
