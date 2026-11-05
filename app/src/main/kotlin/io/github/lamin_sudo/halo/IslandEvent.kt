@@ -1,4 +1,4 @@
-package dz.island.a79
+package io.github.lamin_sudo.halo
 
 import android.app.PendingIntent
 import android.graphics.drawable.Drawable

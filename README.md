@@ -46,7 +46,7 @@ sh gradlew :app:assembleRelease
 adb install -r app/build/outputs/apk/release/app-release.apk
 
 # give the settings app the one permission it needs to write its own config
-adb shell su -c 'pm grant dz.island.a79 android.permission.WRITE_SECURE_SETTINGS'
+adb shell su -c 'pm grant io.github.lamin_sudo.halo android.permission.WRITE_SECURE_SETTINGS'
 
 # reload SystemUI so the hooks attach
 adb shell su -c 'kill $(pidof com.android.systemui)'
@@ -68,12 +68,12 @@ adb shell su -c 'settings put global a79_island_disabled 0'   # back on
 ## Automation API
 
 ```bash
-adb shell am broadcast -n dz.island.a79/.CustomReceiver -a dz.island.a79.CUSTOM \
+adb shell am broadcast -n io.github.lamin_sudo.halo/.CustomReceiver -a io.github.lamin_sudo.halo.CUSTOM \
   --es title "Order shipped" --es text "#4192 to Rafiq" \
   --ei progress 60 --ei ttl 8 --es color 0xFF30D158 --es key order-4192
 ```
 
-`-n` (or at least `-p dz.island.a79`) is required — an implicit broadcast to a custom action is
+`-n` (or at least `-p io.github.lamin_sudo.halo`) is required — an implicit broadcast to a custom action is
 dropped since Android 8. In Tasker, use *Send Broadcast* with the package field filled in. Repeat
 the same message and it shows again: the receiver bumps a sequence number, that is the event.
 
@@ -93,7 +93,7 @@ process can read; changes apply live through a `ContentObserver`, no restart.
 | `ttl_ms` | how long a capsule stays up | 5000 |
 | `offset_x`, `offset_y`, `width_scale` | placement, in px and % | 0, 0, 100 |
 | `allow_<pkg>` | per-app gate | allowed |
-| `debug_log` | verbose logcat under tag `A79Island` | off |
+| `debug_log` | verbose logcat under tag `HaloIsland` | off |
 
 ## Known limits, stated plainly
 

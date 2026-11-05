@@ -20,7 +20,7 @@ The module never hooks `system_server`, never installs an RRO, and never writes 
 The module is declared by `META-INF/xposed/` rather than by manifest meta-data:
 
 ```
-java_init.list   dz.island.a79.IslandModule
+java_init.list   io.github.lamin_sudo.halo.IslandModule
 module.prop      minApiVersion=101 / targetApiVersion=102 / staticScope=true
 scope.list       com.android.systemui
 ```
@@ -219,7 +219,7 @@ by the shell; keep values free of spaces or use `-n`.
 ## Diagnostics that answer questions
 
 ```bash
-adb logcat -s A79Island:D                       # every decision, with the reason it dropped
+adb logcat -s HaloIsland:D                       # every decision, with the reason it dropped
 adb shell su -c 'lspctl status'                 # is the module even loaded / safe mode?
 adb shell su -c 'tail -f /data/adb/lspd/log/modules_*.log'
 adb shell dumpsys notification --noredact       # the real extras of any row

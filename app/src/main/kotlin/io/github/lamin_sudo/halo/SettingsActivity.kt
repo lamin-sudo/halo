@@ -1,4 +1,4 @@
-package dz.island.a79
+package io.github.lamin_sudo.halo
 
 import android.app.Activity
 import android.app.Notification
@@ -25,7 +25,7 @@ import android.widget.TextView
  * Everything is stored in Settings.Global (see [ConfigStore]) because that is the one place the
  * hooked SystemUI process can actually read. Writing it needs WRITE_SECURE_SETTINGS, granted
  * once from a PC:
- *     adb shell su -c 'pm grant dz.island.a79 android.permission.WRITE_SECURE_SETTINGS'
+ *     adb shell su -c 'pm grant io.github.lamin_sudo.halo android.permission.WRITE_SECURE_SETTINGS'
  * If the grant is missing the switches still move, but a toast says the change did not stick.
  */
 class SettingsActivity : Activity() {
@@ -147,7 +147,7 @@ class SettingsActivity : Activity() {
 
         column.addView(Ui.sectionHeader(this, "For debugging"))
         column.addView(group(
-            switchRow(Config.KEY_DEBUG_LOG, "Verbose logcat (A79Island)", Glyph.Kind.LOG, Ui.GREY),
+            switchRow(Config.KEY_DEBUG_LOG, "Verbose logcat (HaloIsland)", Glyph.Kind.LOG, Ui.GREY),
         ))
 
         column.addView(button("Send test notification") { postTestNotification() })
@@ -158,9 +158,9 @@ class SettingsActivity : Activity() {
             setBackgroundColor(Ui.BG)
         })
 
-        // `adb shell am start -n dz.island.a79/.SettingsActivity --es test 1`
-        // `adb shell am start -n dz.island.a79/.SettingsActivity --es test media`
-        // `adb shell am start -n dz.island.a79/.SettingsActivity --es test stop`
+        // `adb shell am start -n io.github.lamin_sudo.halo/.SettingsActivity --es test 1`
+        // `adb shell am start -n io.github.lamin_sudo.halo/.SettingsActivity --es test media`
+        // `adb shell am start -n io.github.lamin_sudo.halo/.SettingsActivity --es test stop`
         // Posts a real notification from a real channel, so the pipeline can be tested without
         // anyone having to tap the screen. The media variant is a CATEGORY_TRANSPORT row with
         // transport actions, which is what the player capsule and the ambient ring key off.
@@ -255,7 +255,7 @@ class SettingsActivity : Activity() {
     private fun note(): View = TextView(this).apply {
         text = "Changes apply live and are stored in system settings, so the island reads them " +
             "without a restart. If a switch does not stick, grant the writer once from a PC:\n" +
-            "adb shell su -c 'pm grant dz.island.a79 android.permission.WRITE_SECURE_SETTINGS'\n\n" +
+            "adb shell su -c 'pm grant io.github.lamin_sudo.halo android.permission.WRITE_SECURE_SETTINGS'\n\n" +
             "If the island ever misbehaves: adb shell su -c 'settings put global a79_island_disabled 1'"
         textSize = 11.5f
         setTextColor(0xFF6F6F76.toInt())
@@ -269,7 +269,7 @@ class SettingsActivity : Activity() {
         warnedAboutGrant = true
         android.widget.Toast.makeText(
             this,
-            "Cannot write settings — run: adb shell su -c 'pm grant dz.island.a79 " +
+            "Cannot write settings — run: adb shell su -c 'pm grant io.github.lamin_sudo.halo " +
                 "android.permission.WRITE_SECURE_SETTINGS'",
             android.widget.Toast.LENGTH_LONG,
         ).show()

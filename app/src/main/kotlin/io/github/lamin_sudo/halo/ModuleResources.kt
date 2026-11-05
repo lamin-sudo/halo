@@ -1,4 +1,4 @@
-package dz.island.a79
+package io.github.lamin_sudo.halo
 
 import android.content.Context
 import android.graphics.drawable.Drawable
@@ -11,7 +11,7 @@ import android.graphics.drawable.Drawable
  */
 object ModuleResources {
 
-    private const val MODULE_ID = "dz.island.a79"
+    private const val MODULE_ID = "io.github.lamin_sudo.halo"
 
     @Volatile
     private var moduleContext: Context? = null

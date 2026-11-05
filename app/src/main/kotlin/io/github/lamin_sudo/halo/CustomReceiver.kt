@@ -1,4 +1,4 @@
-package dz.island.a79
+package io.github.lamin_sudo.halo
 
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -9,7 +9,7 @@ import android.net.Uri
  * The automation door: Tasker, Termux, an SSH session, or a friend's app can put a capsule on the
  * island without the module having to be installed as anything but itself.
  *
- *     adb shell am broadcast -p dz.island.a79 -a dz.island.a79.CUSTOM \
+ *     adb shell am broadcast -p io.github.lamin_sudo.halo -a io.github.lamin_sudo.halo.CUSTOM \
  *       --es title "Order shipped" --es text "#4192 to Rafiq" \
  *       --ei progress 60 --ei ttl 8 --es color 0xFF30D158
  *
@@ -54,14 +54,14 @@ class CustomReceiver : BroadcastReceiver() {
         Logx.d("custom posted seq=$seq title=$title wrote=$wrote")
         if (!wrote) {
             Logx.w(
-                "custom: cannot write settings — run: adb shell su -c 'pm grant dz.island.a79 " +
+                "custom: cannot write settings — run: adb shell su -c 'pm grant io.github.lamin_sudo.halo " +
                     "android.permission.WRITE_SECURE_SETTINGS'"
             )
         }
     }
 
     companion object {
-        const val ACTION = "dz.island.a79.CUSTOM"
+        const val ACTION = "io.github.lamin_sudo.halo.CUSTOM"
 
         /** Where the payload lives; [ConfigStore] adds the namespace. */
         const val KEY_CUSTOM = "custom"

@@ -2,10 +2,16 @@
 <resources>
     <!--
       Renamed from "A79 Island" on the identity pass: the launcher clipped the old label, and the
-      name described the test device rather than the thing. The package stays dz.island.a79 —
+      name described the test device rather than the thing. The package stays io.github.lamin_sudo.halo —
       renaming it would mean uninstalling, which clears the WRITE_SECURE_SETTINGS grant and can
       stale the LSPosed scope.
     -->
     <string name="app_name">Halo</string>
     <string name="app_subtitle">Live island for your camera hole</string>
+    <!--
+      android:description on <application> is what LSPosed shows for a libxposed module: the
+      modern API dropped the xposeddescription meta-data and reads label + description instead.
+      Without it the store entry and the LSPosed module list render an empty subtitle.
+    -->
+    <string name="app_description">Dynamic-island-style capsule around the camera hole: notifications, media, calls, charging, privacy dots. Injects into SystemUI only.</string>
 </resources>

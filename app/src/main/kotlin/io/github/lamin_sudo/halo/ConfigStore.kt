@@ -1,4 +1,4 @@
-package dz.island.a79
+package io.github.lamin_sudo.halo
 
 import android.content.ContentResolver
 import android.provider.Settings
@@ -17,7 +17,7 @@ import android.provider.Settings
  * once it holds WRITE_SECURE_SETTINGS, which is an app-op permission and therefore grantable
  * from a PC — one command, after every reinstall:
  *
- *     adb shell su -c 'pm grant dz.island.a79 android.permission.WRITE_SECURE_SETTINGS'
+ *     adb shell su -c 'pm grant io.github.lamin_sudo.halo android.permission.WRITE_SECURE_SETTINGS'
  *
  * The kill switch (`a79_island_disabled`) already lives here, so this keeps one mechanism for
  * everything instead of two.

@@ -12,7 +12,7 @@ set -eu
 
 SERIAL="${SERIAL:-$(adb devices | sed -n 2p | cut -f1)}"
 ADB="${ADB:-/c/Android/Sdk/platform-tools/adb}"
-PKG="dz.island.a79"
+PKG="io.github.lamin_sudo.halo"
 APK="${APK:-$(dirname "$0")/../app/build/outputs/apk/release/app-release.apk}"
 # The certificate we expect to see. If a build ever comes from a different key, this stops the
 # install instead of quietly making an update impossible later.
@@ -20,15 +20,54 @@ EXPECTED_SHA256="1b7b603f4541a74e5f52fefb852706af0300faf4de44fced7b0409cbae48804
 
 [ -f "$APK" ] || { echo "no release APK at $APK — run: ./gradlew :app:assembleRelease"; exit 1; }
 
+# Without this the script ran on to `adb -s "" install` and reported "(nothing installed)" as if
+# that were a normal state. One device, found or asked for.
+if [ -z "$SERIAL" ]; then
+  echo "no device on adb — connect one, or run: SERIAL=<serial> sh tools/install-release.sh"
+  exit 1
+fi
+
 echo "== signing"
 SHA=$("$ADB" -s "$SERIAL" shell getprop ro.build.version.release 2>/dev/null | tr -d '\r')
 echo "  device Android $SHA"
-ACTUAL=$(cmd //c "C:\\Android\\Sdk\\build-tools\\34.0.0\\apksigner.bat verify --print-certs ${APK//\//\\}" 2>/dev/null \
-  | grep "certificate SHA-256 digest" | awk '{print $NF}')
-if [ "${ACTUAL,,}" != "$EXPECTED_SHA256" ]; then
-  echo "  unexpected certificate: $ACTUAL"; exit 1
+
+# apksigner lives in a build-tools folder whose version is not predictable, so take it from the
+# environment if it is set and otherwise try the usual places. $APKSIGNER wins.
+find_apksigner() {
+  [ -n "${APKSIGNER:-}" ] && { echo "$APKSIGNER"; return; }
+  command -v apksigner >/dev/null 2>&1 && { echo "apksigner"; return; }
+  local root="${ANDROID_HOME:-${ANDROID_SDK_ROOT:-/c/Android/Sdk}}"
+  local bt
+  for bt in "$root"/build-tools/*/apksigner.bat "$root"/build-tools/*/apksigner; do
+    [ -e "$bt" ] && echo "$bt" && return
+  done
+}
+APKSIGNER_BIN=$(find_apksigner)
+
+if [ -z "$APKSIGNER_BIN" ]; then
+  echo "  apksigner not found — set APKSIGNER=/path/to/apksigner to check the certificate."
+  echo "  Continuing, but the pinned-key guard is OFF for this install."
+else
+  # A .bat cannot be exec'd from a POSIX shell without going through a Windows host, and the
+  # quoting of that differs per shell (MSYS_NO_PATHCONV alone changes whether "cmd //c" runs a
+  # command or drops into an interactive prompt). PowerShell is the one form that behaves the
+  # same from Git Bash, cmd, and WSL; on Linux/macOS the tool is a real executable.
+  case "$APKSIGNER_BIN" in
+    *.bat)
+      ACTUAL=$(powershell -NoProfile -Command \
+        "& '${APKSIGNER_BIN}' verify --print-certs '${APK}'" 2>/dev/null \
+        | grep "certificate SHA-256 digest" | awk '{print $NF}')
+      ;;
+    *)
+      ACTUAL=$("$APKSIGNER_BIN" verify --print-certs "$APK" 2>/dev/null \
+        | grep "certificate SHA-256 digest" | awk '{print $NF}')
+      ;;
+  esac
+  if [ "${ACTUAL,,}" != "$EXPECTED_SHA256" ]; then
+    echo "  unexpected certificate: ${ACTUAL:-<apksigner produced nothing>}"; exit 1
+  fi
+  echo "  $ACTUAL (matches the pinned key)"
 fi
-echo "  $ACTUAL (matches the pinned key)"
 
 echo "== replacing the debug build"
 "$ADB" -s "$SERIAL" uninstall "$PKG" >/dev/null 2>&1 || echo "  (nothing installed)"
@@ -45,7 +84,7 @@ echo "  settings + verbose log on"
 echo "== restart SystemUI to load the module"
 "$ADB" -s "$SERIAL" shell "su -c 'kill \$(pidof com.android.systemui)'"
 sleep 14
-"$ADB" -s "$SERIAL" logcat -d -v time A79Island:V '*:S' 2>/dev/null | grep -E "booted|installed" | tail -6
+"$ADB" -s "$SERIAL" logcat -d -v time HaloIsland:V '*:S' 2>/dev/null | grep -E "booted|installed" | tail -6
 
 cat <<'TXT'
 

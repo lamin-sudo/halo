@@ -1,4 +1,4 @@
-package dz.island.a79
+package io.github.lamin_sudo.halo
 
 import android.animation.Animator
 import android.animation.ValueAnimator
@@ -549,7 +549,7 @@ class IslandWindow(
                 layoutInDisplayCutoutMode =
                     WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_ALWAYS
                 softInputMode = WindowManager.LayoutParams.SOFT_INPUT_ADJUST_NOTHING
-                title = "a79-island"
+                title = "halo-island"
                 // Real blur of what is behind the window, so the translucent body reads as
                 // glass. Ignored silently where the compositor does not support it.
                 runCatching {

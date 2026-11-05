@@ -15,6 +15,7 @@
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:description="@string/app_description"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:theme="@android:style/Theme.DeviceDefault.Settings">
 
@@ -39,7 +40,7 @@
         android:name=".CustomReceiver"
         android:exported="true">
         <intent-filter>
-            <action android:name="dz.island.a79.CUSTOM" />
+            <action android:name="io.github.lamin_sudo.halo.CUSTOM" />
         </intent-filter>
     </receiver>
 

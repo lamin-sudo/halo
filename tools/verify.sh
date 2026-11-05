@@ -7,7 +7,7 @@ set -u
 
 SERIAL="${SERIAL:-$(adb devices | sed -n 2p | cut -f1)}"
 ADB="${ADB:-adb}"
-PKG="dz.island.a79"
+PKG="io.github.lamin_sudo.halo"
 OUT_DIR="${OUT_DIR:-${HALO_OUT:-$PWD/build/verify}}"
 RESTART=1
 [ "${1:-}" = "--no-restart" ] && RESTART=0
@@ -42,7 +42,7 @@ for i in 1 2 3; do
 done
 
 echo "== logcat =="
-"$ADB" -s "$SERIAL" logcat -d -s A79Island 2>/dev/null | tail -25 | sed 's/^/  /'
+"$ADB" -s "$SERIAL" logcat -d -s HaloIsland 2>/dev/null | tail -25 | sed 's/^/  /'
 
 echo "== geometry check =="
 python - "$OUT_DIR" "$SERIAL" <<'PY'

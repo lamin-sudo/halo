@@ -1,4 +1,4 @@
-package dz.island.a79
+package io.github.lamin_sudo.halo
 
 import android.util.Log
 
@@ -9,7 +9,7 @@ import android.util.Log
  * to find out that a scene never fired.
  */
 object Logx {
-    private const val TAG = "A79Island"
+    private const val TAG = "HaloIsland"
 
     private fun loud(): Boolean = BuildConfig.DEBUG || Config.debugEnabled()
 

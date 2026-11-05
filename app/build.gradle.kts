@@ -14,11 +14,11 @@ val keystoreProps = Properties().apply {
 }
 
 android {
-    namespace = "dz.island.a79"
+    namespace = "io.github.lamin_sudo.halo"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "dz.island.a79"
+        applicationId = "io.github.lamin_sudo.halo"
         minSdk = 33
         // The target device is Android 13. Keeping targetSdk at 33 avoids testing against
         // behaviour this phone cannot exhibit.
