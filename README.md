@@ -162,14 +162,6 @@ process can read; changes apply live through a `ContentObserver`, no restart.
   module off vs the ring sweeping) but has not been run. Until it is, treat the ambient ring as
   unquantified — which is why the media ring only runs while something is actually playing.
 
-## Documentation
-
-- `docs/HOW-IT-WORKS.md` — the hook map, every measurement that shaped it, and the four routes
-  that failed before the right signal was found.
-- `NOTICE` — the two external sources, and the line between "measured this device" and
-  "copied proprietary code" (there is none of the latter here).
-- `AGENTS.md` — the rules for anyone continuing the work, including the Kotlin/interceptor trap
-  that crashed SystemUI twice.
 
 ## Licence
 
